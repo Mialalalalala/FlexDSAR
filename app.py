@@ -22,7 +22,7 @@ angle_options = [30, 45, 60]
 selected_angles = {freq: st.multiselect(f"Select Incidence Angles for {freq}:", angle_options) for freq in selected_freqs}
 
 # Calibration Uncertainty Input
-noise = st.number_input("Calibration Uncertainty (dB):", value=0.1, step=0.1)
+noise = st.number_input("Calibration Uncertainty (dB):", value=0.1)
 
 # Store comparison cases
 if "comparison_cases" not in st.session_state:
