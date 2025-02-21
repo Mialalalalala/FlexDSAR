@@ -2,8 +2,6 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import dropbox
-from io import BytesIO
 from retrieval_app import run_retrieval
 
 st.title("🌍 Soil Moisture Profile & Vegetation Water Content Retrieval")
