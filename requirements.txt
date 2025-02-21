@@ -7,5 +7,6 @@ pandas==1.4.4
 scikit-learn==1.5.2
 scipy==1.13.1
 seaborn==0.12.2
+setuptools
 streamlit==1.42.2
 xgboost==1.7.3
