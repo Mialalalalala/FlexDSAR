@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 from retrieval_app import run_retrieval
 
-st.title("🌍 Soil Moisture Profile & Vegetation Water Content Retrieval")
+st.title("🛰️📡🌍 Soil Moisture Profile & Vegetation Water Content Retrieval 🌱🌲🌳")
 
 # Select Land Cover Type
 landcover = st.selectbox("Select Land Cover Type:", ["Grassland", "Shrub", "Deciduous", "Evergreen"])
