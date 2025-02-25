@@ -130,7 +130,7 @@ if st.button("Run Comparison"):
         ax1.set_xlabel("Cases")
 
         ax1.set_ylabel("SM RMSE (m³/m³)")
-        ax1.legend()
+        ax1.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
         
         # Add VWC RMSE plot
         ax2 = ax1.twinx()
@@ -139,7 +139,7 @@ if st.button("Run Comparison"):
         vwc_max_value = max(case["rmse"][5] for case in st.session_state.comparison_cases)
         ax2.set_ylim(0, vwc_max_value+0.05)
         ax2.set_ylabel("VWC RMSE (kg/m²)")
-        ax2.legend(loc='lower right')
+        ax2.legend(loc='upper right', bbox_to_anchor=(1.27, 0.9))
         plt.grid()
         st.pyplot(fig)
         
