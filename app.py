@@ -106,6 +106,8 @@ if st.button("Run Comparison"):
         fig, ax1 = plt.subplots(figsize=(10, 5))
         colors = ['blue','orange', 'green', 'purple','black'] #'pink','deepskyblue'
         markers = ['o','o', 'o', 'o', '*']
+
+        plt.rcParams.update({'font.size': 12})
         
         rmse = []
         for i, depth in enumerate(depth_levels):
