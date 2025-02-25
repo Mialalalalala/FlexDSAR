@@ -67,9 +67,9 @@ def run_retrieval(case):
 
     np.random.seed(0)
 
-    X_train, X_test_, y_train, y_test_ = train_test_split(final_dataframes_1, y, test_size=0.2, random_state=42)
-    X_train = final_dataframes_1
-    y_train = y
+    # X_train, X_test_, y_train, y_test_ = train_test_split(final_dataframes_1, y, test_size=0.2, random_state=42)
+    X_test_ = final_dataframes_1
+    y_test_ = y
     
     if site in ['Grassland', 'Shrub']:
         X_test = X_test_
