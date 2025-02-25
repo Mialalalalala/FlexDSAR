@@ -85,7 +85,7 @@ if st.session_state.comparison_cases:
         ])
     
     # Define column names dynamically
-    depth_levels = ["SM at 10cm [m³/m³]", "SM at 20cm[m³/m³]", "SM at 50cm[m³/m³]", "VWC[kg/m²]"]
+    depth_levels = ["SM at 0cm [m³/m³]", "SM at 10cm [m³/m³]", "SM at 30cm[m³/m³]", "SM at 50cm[m³/m³]", "Overall SM[m³/m³]","VWC[kg/m²]"]
     columns = ["Case #", "Land Cover", "Frequencies", "Polarizations", "Angles", "Noise"] + depth_levels
     
     # Create DataFrame and display
@@ -100,15 +100,20 @@ if st.button("Run Comparison"):
         st.warning("No cases to compare. Please add at least one case.")
     else:
         st.write("### 🔍 Comparison of Retrieved RMSEs Across Cases:")
-        depth_levels = ["SM at 10cm", "SM at 20cm", "SM at 50cm"]
+        depth_levels = ["SM at 0cm", "SM at 10cm", #"SM at 20cm",
+                    "SM at 30cm", "SM at 50cm",'Overall SM']
         
         fig, ax1 = plt.subplots(figsize=(10, 5))
-        colors = ['orange', 'green', 'purple']
+        colors = ['blue','orange', 'green', 'purple','black'] #'pink','deepskyblue'
+        markers = ['o','o', 'o', 'o', '*']
         
+        rmse = []
         for i, depth in enumerate(depth_levels):
             rmse_values = [case["rmse"][i] for case in st.session_state.comparison_cases]
-            ax1.scatter(range(len(rmse_values)), rmse_values, color=colors[i], label=depth, s=100, facecolors='none')
-        ax1.set_ylim(0, np.max(rmse_values)+0.02)
+            rmse.append(rmse_values)
+            ax1.scatter(range(len(rmse_values)), rmse_values, color=colors[i], marker=markers[i], label=depth, s=100, facecolors='none')
+        
+        ax1.set_ylim(0, np.max(rmse)+0.02)
         ax1.axhline(y=0.075, color='red', linestyle='dashed')
         ax1.set_xticks(range(len(st.session_state.comparison_cases)))
 
@@ -129,9 +134,9 @@ if st.button("Run Comparison"):
         
         # Add VWC RMSE plot
         ax2 = ax1.twinx()
-        vwc_rmse_values = [case["rmse"][3] for case in st.session_state.comparison_cases]
+        vwc_rmse_values = [case["rmse"][5] for case in st.session_state.comparison_cases]
         ax2.scatter(range(len(vwc_rmse_values)), vwc_rmse_values, label="VWC", color='red', marker='^', s=100, facecolors='none')
-        vwc_max_value = max(case["rmse"][3] for case in st.session_state.comparison_cases)
+        vwc_max_value = max(case["rmse"][5] for case in st.session_state.comparison_cases)
         ax2.set_ylim(0, vwc_max_value+0.05)
         ax2.set_ylabel("VWC RMSE (kg/m²)")
         ax2.legend(loc='lower right')

@@ -176,25 +176,43 @@ def run_retrieval(case):
     print('rmse_a',rmse_a,'rmse_b',rmse_b,'rmse_c',rmse_c)
 
 # ##########################second order poly soil moisture profile##################################
+    X_test['sm0'] = X_test['c']
     X_test['sm10'] = X_test['a']*0.1*0.1+X_test['b']*0.1+X_test['c']
     X_test['sm20'] = X_test['a']*0.2*0.2+X_test['b']*0.2+X_test['c']
+    X_test['sm30'] = X_test['a']*0.3*0.3+X_test['b']*0.3+X_test['c']
+    X_test['sm40'] = X_test['a']*0.4*0.4+X_test['b']*0.4+X_test['c']
     X_test['sm50'] = X_test['a']*0.5*0.5+X_test['b']*0.5+X_test['c']
     
+    X_test['sm0_re'] = y_pred_c
     X_test['sm10_re'] = y_pred_a*0.1*0.1+y_pred_b*0.1+y_pred_c
     X_test['sm20_re'] = y_pred_a*0.2*0.2+y_pred_b*0.2+y_pred_c
+    X_test['sm30_re'] = y_pred_a*0.3*0.3+y_pred_b*0.3+y_pred_c
+    X_test['sm40_re'] = y_pred_a*0.4*0.4+y_pred_b*0.4+y_pred_c
     X_test['sm50_re'] = y_pred_a*0.5*0.5+y_pred_b*0.5+y_pred_c
     X_test['vwc_re'] = y_pred_vwc
     
-    X_test_screen = X_test[(X_test['sm10_re'] > 0) & (X_test['sm20_re'] > 0) & (X_test['sm50_re'] >0) & (X_test['vwc_re'] >0) &
-                           (X_test['sm10_re'] < 0.5) & (X_test['sm20_re'] <0.5) & (X_test['sm50_re'] <0.5)]
-    
+    X_test_screen = X_test[(X_test['sm0_re'] > 0) &(X_test['sm10_re'] > 0) & (X_test['sm20_re'] > 0) & (X_test['sm50_re'] >0) & (X_test['vwc_re'] >0) &
+                           (X_test['sm0_re'] < 0.5) &(X_test['sm10_re'] < 0.5) & (X_test['sm20_re'] <0.5) & (X_test['sm50_re'] <0.5)]
+    # print(df_valid)
+
+    rmse_sm = root_mean_squared_error(np.array([X_test['sm0'],X_test['sm10'],X_test['sm30'],X_test['sm50']]).flatten(), 
+                                     np.array([X_test['sm0_re'],X_test['sm10_re'],X_test['sm30_re'],X_test['sm50_re']]).flatten())
+    rmse_sm0 = root_mean_squared_error(X_test_screen['sm0'], 
+                                         X_test_screen['sm0_re'])
     rmse_sm1 = root_mean_squared_error(X_test_screen['sm10'], 
                                          X_test_screen['sm10_re'])
     rmse_sm2 = root_mean_squared_error(X_test_screen['sm20'], 
                                          X_test_screen['sm20_re'])
-    rmse_sm3 = root_mean_squared_error(X_test_screen['sm50'], 
+    rmse_sm3 = root_mean_squared_error(X_test_screen['sm30'], 
+                                         X_test_screen['sm30_re'])
+    rmse_sm4 = root_mean_squared_error(X_test_screen['sm40'], 
+                                         X_test_screen['sm40_re'])
+    rmse_sm5 = root_mean_squared_error(X_test_screen['sm50'], 
                                          X_test_screen['sm50_re'])
     rmse_vwc = root_mean_squared_error(X_test_screen['vwc'], 
                                         X_test_screen['vwc_re'])
     
-    return rmse_sm1,rmse_sm2,rmse_sm3,rmse_vwc
+#     # print('X-test',X_test)
+#     print('rmse_sm1,rmse_sm2,rmse_sm3,rmse_vwc',rmse_sm1,rmse_sm2,rmse_sm3,rmse_vwc)
+    
+    return rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc,#rmse_sm2,rmse_sm4,rmse_a,rmse_b,rmse_c
