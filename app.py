@@ -2,7 +2,30 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import pandas as pd
 from retrieval_app import run_retrieval
+
+def organize_frequencies(selected_freqs):
+    """
+    Ensures that the selected frequencies always follow the sequence:
+    ["290 MHz P", "430 MHz P", "L"], keeping only the ones selected by the user.
+    
+    :param selected_freqs: List of frequencies selected by the user.
+    :return: Ordered list of selected frequencies.
+    """
+    standard_order = ["290 MHz P", "430 MHz P", "L"]
+    return [freq for freq in standard_order if freq in selected_freqs]
+
+def organize_angles_dict(angle_dict):
+    """
+    Ensures that the angles for each frequency in the dictionary follow the sequence [30, 45, 60].
+
+    :param angle_dict: Dictionary with frequencies as keys and lists of angles as values.
+    :return: Dictionary with sorted angle lists.
+    """
+    standard_order = [30, 45, 60]
+    return {freq: sorted(angles, key=lambda x: standard_order.index(x)) for freq, angles in angle_dict.items()}
+
 
 st.title("🛰️📡🌍 Soil Moisture Profile & Vegetation Water Content Retrieval 🌱🌲🌳")
 
@@ -12,14 +35,16 @@ landcover = st.selectbox("Select Land Cover Type:", ["Grassland", "Shrub", "Deci
 # Select Frequency Bands
 freq_options = ["290 MHz P", "430 MHz P", "L"]
 selected_freqs = st.multiselect("Select Frequency Bands:", freq_options)
+selected_freqs = organize_frequencies(selected_freqs)
 
 # Select Polarization for each Frequency
-pol_options = ["HH/HV", "VV/HV", "HH", "VV", "HH/VV/HV"]
+pol_options = ["HH", "VV", "HH/HV", "VV/HV", "HH/VV/HV"]
 selected_pols = {freq: st.selectbox(f"Select Polarization for {freq}:", pol_options) for freq in selected_freqs}
 
 # Select Incidence Angles for each Frequency
 angle_options = [30, 45, 60]
 selected_angles = {freq: st.multiselect(f"Select Incidence Angles for {freq}:", angle_options) for freq in selected_freqs}
+selected_angles = organize_angles_dict(selected_angles)
 
 # Calibration Uncertainty Input
 noise = st.number_input("Calibration Uncertainty (dB):", value=0.1)
@@ -42,8 +67,35 @@ if st.button("Add to Comparison"):
     st.session_state.comparison_cases.append(case)
     st.success("Case added to comparison!")
 
+# Display previously added comparison cases as a table
+if st.session_state.comparison_cases:
+    st.write("### 📋 Added Comparison Cases:")
+    
+    # Convert cases into a structured dataframe
+    case_data = []
+    for i, case in enumerate(st.session_state.comparison_cases):
+        freqs = ", ".join(case["frequencies"])
+        pols = ", ".join([f"{freq}: {case['polarizations'][freq]}" for freq in case["polarizations"]])
+        angles = ", ".join([f"{freq}: " + ", ".join(map(str, case["angles"][freq])) + "°" for freq in case["angles"]])
+        noise = f"{case['noise']} dB"
+        rmse_values = [f"{val:.3f}" for val in case["rmse"]]  # Format RMSE values
+        
+        case_data.append([
+            i+1, case["landcover"], freqs, pols, angles, noise, *rmse_values
+        ])
+    
+    # Define column names dynamically
+    depth_levels = ["SM at 10cm [m³/m³]", "SM at 20cm[m³/m³]", "SM at 50cm[m³/m³]", "VWC[kg/m²]"]
+    columns = ["Case #", "Land Cover", "Frequencies", "Polarizations", "Angles", "Noise"] + depth_levels
+    
+    # Create DataFrame and display
+    df_cases = pd.DataFrame(case_data, columns=columns)
+    st.dataframe(df_cases)
+else:
+    st.write("No cases have been added yet.")
+
 # Button to finalize comparison and plot results
-if st.button("Done Comparison"):
+if st.button("Run Comparison"):
     if not st.session_state.comparison_cases:
         st.warning("No cases to compare. Please add at least one case.")
     else:
@@ -59,7 +111,7 @@ if st.button("Done Comparison"):
         ax1.set_ylim(0, np.max(rmse_values)+0.02)
         ax1.axhline(y=0.075, color='red', linestyle='dashed')
         ax1.set_xticks(range(len(st.session_state.comparison_cases)))
-#         print(st.session_state.comparison_cases)
+
         case_labels = []
         for case in st.session_state.comparison_cases:
             freqs = ", ".join(case["frequencies"])

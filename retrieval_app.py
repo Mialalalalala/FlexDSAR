@@ -6,7 +6,6 @@ import pickle
 import joblib
 import pandas as pd
 import numpy as np
-from pathlib import Path
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import root_mean_squared_error
@@ -77,8 +76,8 @@ def run_retrieval(case):
         y_test = y_test_
 
     if site in ['Deciduous']:
-        X_test = X_test_[(X_test_['vwc'] > 9) & (X_test_['vwc'] < 15)]
-        y_test = y_test_[(X_test_['vwc'] > 9) & (X_test_['vwc'] < 15)]
+        X_test = X_test_#[(X_test_['vwc'] > 9) & (X_test_['vwc'] < 15)]
+        y_test = y_test_#[(X_test_['vwc'] > 9) & (X_test_['vwc'] < 15)]
 
     if site in ['Evergreen']:
         X_test = X_test_#[(X_test_['vwc'] > 5) & (X_test_['vwc'] < 20)]
