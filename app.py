@@ -29,6 +29,8 @@ def organize_angles_dict(angle_dict):
 
 st.title("🛰️📡🌍 Soil Moisture Profile & Vegetation Water Content Retrieval 🌱🌲🌳")
 
+plt.rcParams.update({'font.size': 12})
+
 # Select Land Cover Type
 landcover = st.selectbox("Select Land Cover Type:", ["Grassland", "Shrub", "Deciduous", "Evergreen"])
 
@@ -106,8 +108,6 @@ if st.button("Run Comparison"):
         fig, ax1 = plt.subplots(figsize=(10, 5))
         colors = ['blue','orange', 'green', 'purple','black'] #'pink','deepskyblue'
         markers = ['o','o', 'o', 'o', '*']
-
-        plt.rcParams.update({'font.size': 12})
         
         rmse = []
         for i, depth in enumerate(depth_levels):
@@ -141,7 +141,7 @@ if st.button("Run Comparison"):
         vwc_max_value = max(case["rmse"][5] for case in st.session_state.comparison_cases)
         ax2.set_ylim(0, vwc_max_value+0.05)
         ax2.set_ylabel("VWC RMSE (kg/m²)")
-        ax2.legend(bbox_to_anchor=(1.27, 0.8), loc='upper right')
+        ax2.legend(bbox_to_anchor=(1.27, 0.75), loc='upper right')
         plt.grid()
         st.pyplot(fig)
         
