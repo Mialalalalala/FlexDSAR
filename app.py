@@ -102,11 +102,11 @@ if st.button("Run Comparison"):
         st.warning("No cases to compare. Please add at least one case.")
     else:
         st.write("### 🔍 Comparison of Retrieved RMSEs Across Cases:")
-        depth_levels = ["SM at 0cm", "SM at 10cm", #"SM at 20cm",
-                    "SM at 30cm", "SM at 50cm",'Overall SM']
+        depth_levels = ["SM at 0cm", "SM at 20cm", #"SM at 20cm","SM at 30cm",
+                        "SM at 50cm",'Overall SM']
         
         fig, ax1 = plt.subplots(figsize=(10, 5))
-        colors = ['blue','orange', 'green', 'purple','black'] #'pink','deepskyblue'
+        colors = ['blue', 'green', 'purple','black'] #'pink','deepskyblue'
         markers = ['o','o', 'o', 'o', '*']
         
         rmse = []

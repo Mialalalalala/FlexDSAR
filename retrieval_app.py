@@ -211,6 +211,6 @@ def run_retrieval(case):
     rmse_vwc = root_mean_squared_error(X_test_screen['vwc'], 
                                         X_test_screen['vwc_re'])
     
-    print('rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc',rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc)
+    # print('rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc',rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc)
     
-    return rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc,#rmse_sm2,rmse_sm4,rmse_a,rmse_b,rmse_c
+    return rmse_sm0,rmse_sm2,rmse_sm5,rmse_sm,rmse_vwc,#rmse_sm2,rmse_sm4,rmse_a,rmse_b,rmse_c
