@@ -87,7 +87,7 @@ if st.session_state.comparison_cases:
         ])
     
     # Define column names dynamically
-    depth_levels = ["SM at 0cm [m³/m³]", "SM at 10cm [m³/m³]", "SM at 30cm[m³/m³]", "SM at 50cm[m³/m³]", "Overall SM[m³/m³]","VWC[kg/m²]"]
+    depth_levels = ["SM at 0cm [m³/m³]", "SM at 20cm [m³/m³]", "SM at 50cm[m³/m³]", "Overall SM[m³/m³]","VWC[kg/m²]"]
     columns = ["Case #", "Land Cover", "Frequencies", "Polarizations", "Angles", "Noise"] + depth_levels
     
     # Create DataFrame and display
