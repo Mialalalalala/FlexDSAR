@@ -193,7 +193,6 @@ def run_retrieval(case):
     
     X_test_screen = X_test[(X_test['sm0_re'] > 0) &(X_test['sm10_re'] > 0) & (X_test['sm20_re'] > 0) & (X_test['sm50_re'] >0) & (X_test['vwc_re'] >0) &
                            (X_test['sm0_re'] < 0.5) &(X_test['sm10_re'] < 0.5) & (X_test['sm20_re'] <0.5) & (X_test['sm50_re'] <0.5)]
-    # print(df_valid)
 
     rmse_sm = root_mean_squared_error(np.array([X_test_screen['sm0'],X_test_screen['sm10'],X_test_screen['sm30'],X_test_screen['sm50']]).flatten(), 
                                      np.array([X_test_screen['sm0_re'],X_test_screen['sm10_re'],X_test_screen['sm30_re'],X_test_screen['sm50_re']]).flatten())
@@ -212,6 +211,6 @@ def run_retrieval(case):
     rmse_vwc = root_mean_squared_error(X_test_screen['vwc'], 
                                         X_test_screen['vwc_re'])
     
-    # print('rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc',rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc)
+    print('rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc',rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc)
     
     return rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc,#rmse_sm2,rmse_sm4,rmse_a,rmse_b,rmse_c
