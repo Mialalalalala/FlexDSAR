@@ -107,7 +107,7 @@ if st.button("Run Comparison"):
         
         fig, ax1 = plt.subplots(figsize=(10, 5))
         colors = ['blue', 'green', 'purple','black'] #'pink','deepskyblue'
-        markers = ['o','o', 'o', 'o', '*']
+        markers = ['o','o', 'o', '*']
         
         rmse = []
         for i, depth in enumerate(depth_levels):
