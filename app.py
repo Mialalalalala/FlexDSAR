@@ -136,9 +136,9 @@ if st.button("Run Comparison"):
         
         # Add VWC RMSE plot
         ax2 = ax1.twinx()
-        vwc_rmse_values = [case["rmse"][5] for case in st.session_state.comparison_cases]
+        vwc_rmse_values = [case["rmse"][4] for case in st.session_state.comparison_cases]
         ax2.scatter(range(len(vwc_rmse_values)), vwc_rmse_values, label="VWC", color='red', marker='^', s=100, facecolors='none')
-        vwc_max_value = max(case["rmse"][5] for case in st.session_state.comparison_cases)
+        vwc_max_value = max(case["rmse"][4] for case in st.session_state.comparison_cases)
         ax2.set_ylim(0, vwc_max_value+0.05)
         ax2.set_ylabel("VWC RMSE (kg/m²)")
         ax2.legend(bbox_to_anchor=(1.27, 0.75), loc='upper right')
