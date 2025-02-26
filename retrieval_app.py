@@ -84,14 +84,14 @@ def run_retrieval(case):
         y_test = y_test_#[(X_test_['vwc'] > 5) & (X_test_['vwc'] < 20)]
     
     # add noise
-    print('noise',noise)
-    print('pp',pp)
+    # print('noise',noise)
+    # print('pp',pp)
     if noise != 0:
         for col in pp:
             gaussian_noise = np.random.normal(loc=0.0, scale=noise, size=X_test.shape[0])
             # Add this noise directly to the column
             X_test[col] = X_test[col] + gaussian_noise
-    print('X_test',X_test)
+    # print('X_test',X_test)
 
 # ############################################################
 #     num_est = 30
@@ -195,8 +195,8 @@ def run_retrieval(case):
                            (X_test['sm0_re'] < 0.5) &(X_test['sm10_re'] < 0.5) & (X_test['sm20_re'] <0.5) & (X_test['sm50_re'] <0.5)]
     # print(df_valid)
 
-    rmse_sm = root_mean_squared_error(np.array([X_test['sm0'],X_test['sm10'],X_test['sm30'],X_test['sm50']]).flatten(), 
-                                     np.array([X_test['sm0_re'],X_test['sm10_re'],X_test['sm30_re'],X_test['sm50_re']]).flatten())
+    rmse_sm = root_mean_squared_error(np.array([X_test_screen['sm0'],X_test_screen['sm10'],X_test_screen['sm30'],X_test_screen['sm50']]).flatten(), 
+                                     np.array([X_test_screen['sm0_re'],X_test_screen['sm10_re'],X_test_screen['sm30_re'],X_test_screen['sm50_re']]).flatten())
     rmse_sm0 = root_mean_squared_error(X_test_screen['sm0'], 
                                          X_test_screen['sm0_re'])
     rmse_sm1 = root_mean_squared_error(X_test_screen['sm10'], 
@@ -212,7 +212,6 @@ def run_retrieval(case):
     rmse_vwc = root_mean_squared_error(X_test_screen['vwc'], 
                                         X_test_screen['vwc_re'])
     
-#     # print('X-test',X_test)
-#     print('rmse_sm1,rmse_sm2,rmse_sm3,rmse_vwc',rmse_sm1,rmse_sm2,rmse_sm3,rmse_vwc)
+    # print('rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc',rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc)
     
     return rmse_sm0,rmse_sm1,rmse_sm3,rmse_sm5,rmse_sm,rmse_vwc,#rmse_sm2,rmse_sm4,rmse_a,rmse_b,rmse_c
