@@ -62,8 +62,8 @@ def run_retrieval(case):
         final_dataframes_ = final_dataframes[~(final_dataframes[hv_cols] < -45).any(axis=1)]
         y = y[~(final_dataframes[hv_cols] < -45).any(axis=1)]
 
-        final_dataframes_1 = final_dataframes_[(final_dataframes_['vwc'] > 9) & (final_dataframes_['vwc'] < 15)]
-        y = y[(final_dataframes_['vwc'] > 9) & (final_dataframes_['vwc'] < 15)]
+        final_dataframes_1 = final_dataframes_[(final_dataframes_['vwc'] > 7) & (final_dataframes_['vwc'] < 25)]
+        y = y[(final_dataframes_['vwc'] > 7) & (final_dataframes_['vwc'] < 25)]
 
     np.random.seed(0)
 
