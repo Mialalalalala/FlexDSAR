@@ -40,7 +40,7 @@ selected_freqs = st.multiselect("Select Frequency Bands:", freq_options)
 selected_freqs = organize_frequencies(selected_freqs)
 
 # Select Polarization for each Frequency
-pol_options = ["HH", "VV", "HH/HV", "VV/HV", "HH/VV/HV"]
+pol_options = ["HH/HV", "VV/HV", "HH/VV/HV"] # "HH", "VV",
 selected_pols = {freq: st.selectbox(f"Select Polarization for {freq}:", pol_options) for freq in selected_freqs}
 
 # Select Incidence Angles for each Frequency
