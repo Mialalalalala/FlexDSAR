@@ -99,7 +99,7 @@ def run_retrieval(case):
 
     # Load the model
     subfolder = "models"  # Change to your actual subfolder name
-    model_filename = f"{site}_{pp}_{noise}_a.pkl"  
+    model_filename = f"{site}_{pp}_a.pkl"  
     model_filename_a = os.path.join(subfolder, model_filename)  # Construct full path
 
     if os.path.exists(model_filename_a):
@@ -114,7 +114,7 @@ def run_retrieval(case):
         # joblib.dump(model_a, model_filename)
 
     # Load the model
-    model_filename = f"{site}_{pp}_{noise}_b.pkl" 
+    model_filename = f"{site}_{pp}_b.pkl" 
     model_filename_b = os.path.join(subfolder, model_filename)  # Construct full path 
     if os.path.exists(model_filename_b):
         with open(model_filename_b, "rb") as file:
@@ -128,7 +128,7 @@ def run_retrieval(case):
         # joblib.dump(model_b, model_filename)
 
     # Load the model
-    model_filename = f"{site}_{pp}_{noise}_c.pkl" 
+    model_filename = f"{site}_{pp}_c.pkl" 
     model_filename_c = os.path.join(subfolder, model_filename)  # Construct full path  
     if os.path.exists(model_filename_c):
         with open(model_filename_c, "rb") as file:
@@ -142,7 +142,7 @@ def run_retrieval(case):
         # joblib.dump(model_c, model_filename)
 
     # Load the model
-    model_filename = f"{site}_{pp}_{noise}_vwc.pkl"  
+    model_filename = f"{site}_{pp}_vwc.pkl"  
     model_filename_vwc = os.path.join(subfolder, model_filename)  # Construct full path
     if os.path.exists(model_filename_vwc):
         with open(model_filename_vwc, "rb") as file:
