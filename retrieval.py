@@ -22,6 +22,7 @@ def run_retrieval(case):
     filename = folder_path.joinpath(f"{site}_45_test.csv")
     datacube = pd.read_csv(filename)
     # print(datacube.columns)
+    print(datacube)
 
     final_dataframes = datacube[['a','b','c','vwc']]  
     y = datacube[['a','b','c','vwc']] 
@@ -66,7 +67,8 @@ def run_retrieval(case):
 
                  pp = pp + pol_list
 
-                 filename = f"{site}_datacube_{inc}.csv"
+                 filename = folder_path.joinpath(f"{site}_{inc}_test.csv")
+                #  filename = f"{site}_datacube_{inc}.csv"
                 #  filename = f"BS_{site}_datacube_{inc}_wide_c.csv"
                  if Path(filename).exists():
                       datacube = pd.read_csv(filename)
@@ -74,6 +76,7 @@ def run_retrieval(case):
                       raise FileNotFoundError(f"Dataset {filename} not found!")
                  selected_df = datacube[pol_list]  
                  final_dataframes = pd.concat([final_dataframes, selected_df], axis=1)
+    
 
     if site in ['Grassland', 'Shrub']:
          final_dataframes_1 = final_dataframes
@@ -98,9 +101,9 @@ def run_retrieval(case):
 
     np.random.seed(0)
 
-    X_train, X_test_, y_train, y_test_ = train_test_split(final_dataframes_1, y, test_size=0.2, random_state=42)
-    X_train = final_dataframes_1
-    y_train = y
+    # X_train, X_test_, y_train, y_test_ = train_test_split(final_dataframes_1, y, test_size=0.2, random_state=42)
+    X_test_ = final_dataframes_1
+    y_test_ = y
     
     if site in ['Grassland', 'Shrub']:
         X_test = X_test_
@@ -116,13 +119,14 @@ def run_retrieval(case):
     
     # add noise
     # print('noise',noise)
-    # print('pp',pp)
+    print("X_test shape:", X_test.shape)
+    print("y_test shape:", y_test.shape)
+    print('size',X_test.shape[0])
     if noise != 0:
         for col in pp:
             gaussian_noise = np.random.normal(loc=0.0, scale=noise, size=X_test.shape[0])
             # Add this noise directly to the column
             X_test[col] = X_test[col] + gaussian_noise
-    # print('X_test',X_test)
 
 # ############################################################
 #     num_est = 30
@@ -136,12 +140,12 @@ def run_retrieval(case):
     if os.path.exists(model_filename_a):
         with open(model_filename_a, "rb") as file:
             model_a = pickle.load(file)
-    else:
-        # Create an XGBoost regressor model
-        model_a = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
+    # else:
+    #     # Create an XGBoost regressor model
+    #     model_a = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
         # Train the model
-        model_a.fit(X_train[pp], y_train['a'])
-        joblib.dump(model_a, model_filename_a)
+        # model_a.fit(X_train[pp], y_train['a'])
+        # joblib.dump(model_a, model_filename_a)
 
     # Load the model
     model_filename = f"{site}_{pp}_b.pkl" 
@@ -149,12 +153,12 @@ def run_retrieval(case):
     if os.path.exists(model_filename_b):
         with open(model_filename_b, "rb") as file:
             model_b = pickle.load(file)
-    else:
-        # Create an XGBoost regressor model
-        model_b = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
-        # Train the model
-        model_b.fit(X_train[pp], y_train['b'])
-        joblib.dump(model_b, model_filename_b)
+    # else:
+    #     # Create an XGBoost regressor model
+    #     model_b = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
+    #     # Train the model
+    #     model_b.fit(X_train[pp], y_train['b'])
+    #     joblib.dump(model_b, model_filename_b)
 
     # Load the model
     model_filename = f"{site}_{pp}_c.pkl" 
@@ -162,12 +166,12 @@ def run_retrieval(case):
     if os.path.exists(model_filename_c):
         with open(model_filename_c, "rb") as file:
             model_c = pickle.load(file)
-    else:
-        # Create an XGBoost regressor model
-        model_c = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
-        # Train the model
-        model_c.fit(X_train[pp], y_train['c']) 
-        joblib.dump(model_c, model_filename_c)
+    # else:
+    #     # Create an XGBoost regressor model
+    #     model_c = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
+    #     # Train the model
+    #     model_c.fit(X_train[pp], y_train['c']) 
+    #     joblib.dump(model_c, model_filename_c)
 
     # Load the model
     model_filename = f"{site}_{pp}_vwc.pkl"  
@@ -175,12 +179,12 @@ def run_retrieval(case):
     if os.path.exists(model_filename_vwc):
         with open(model_filename_vwc, "rb") as file:
             model_vwc = pickle.load(file)
-    else:
-        # Create an XGBoost regressor model
-        model_vwc = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
-        # Train the model
-        model_vwc.fit(X_train[pp], y_train['vwc'])
-        joblib.dump(model_vwc, model_filename_vwc)
+    # else:
+    #     # Create an XGBoost regressor model
+    #     model_vwc = xgb.XGBRegressor(objective='reg:squarederror')#n_estimators=num_est, max_depth = num_max_depth
+    #     # Train the model
+    #     model_vwc.fit(X_train[pp], y_train['vwc'])
+    #     joblib.dump(model_vwc, model_filename_vwc)
 
 # ############################################################
     # # Make predictions
