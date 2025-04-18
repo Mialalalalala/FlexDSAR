@@ -80,7 +80,7 @@ def plot_comparison_summary():
         ax1.scatter(range(len(comparison_cases)), rmse_values, label=depth_label, color=colors[i], marker=markers[i],s=200, linewidths=2,facecolors='none')
     ax1.set_ylim(0, np.max(rmse)+0.02)
     ax1.axhline(y=0.05, color='red', linestyle='dashed',)
-    ax1.legend(loc='upper right')
+    ax1.legend(loc='lower right')
 
     ax2 = ax1.twinx()
     vwc_rmse_values = [case["rmse"][4] for case in comparison_cases]
@@ -105,7 +105,7 @@ def plot_comparison_summary():
     ax1.set_title("Comparison of Retrieved RMSE of SM and VWC Across Cases")
 
     ax2.set_ylabel("VWC RMSE (kg/m²)")
-    ax2.legend(loc='upper left')
+    ax2.legend(loc='lower left')
     vwc_max_value = max(case["rmse"][4] for case in comparison_cases)
     ax2.set_ylim(0, vwc_max_value+0.15)
     plt.grid()
