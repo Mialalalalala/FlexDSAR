@@ -70,7 +70,7 @@ def plot_comparison_summary():
     
     fig, ax1 = plt.subplots(figsize=(16, 8))
     depth_levels = ["SM at 0cm", "SM at 20cm", "SM at 50cm",'Overall SM']
-    colors = ['blue', 'green', 'purple','black'] #'pink','deepskyblue'
+    colors = ['orange', 'green', 'purple','black'] #'pink','deepskyblue'
     markers = ['o','o', 'o', '*']
     
     rmse = []
