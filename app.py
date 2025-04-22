@@ -116,7 +116,7 @@ if st.button("Run Comparison"):
             ax1.scatter(range(len(rmse_values)), rmse_values, color=colors[i], marker=markers[i], label=depth, s=100, facecolors='none')
         
         ax1.set_ylim(0, np.max(rmse)+0.02)
-        ax1.axhline(y=0.075, color='red', linestyle='dashed')
+        # ax1.axhline(y=0.075, color='red', linestyle='dashed')
         ax1.set_xticks(range(len(st.session_state.comparison_cases)))
 
         case_labels = []
